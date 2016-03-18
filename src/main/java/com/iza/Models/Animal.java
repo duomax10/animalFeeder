@@ -1,5 +1,6 @@
 package com.iza.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +11,10 @@ public class Animal {
     private String name;
     private Species species;
     private List<AnimalFeedRecord> feedingRecords;
+
+    public Animal(){
+        feedingRecords = new ArrayList<>();
+    }
 
     public int getId() {
         return id;

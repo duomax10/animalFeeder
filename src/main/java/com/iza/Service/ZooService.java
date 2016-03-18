@@ -1,11 +1,14 @@
 package com.iza.Service;
 
+import com.iza.DTO.DailyFeedingDTO;
 import com.iza.Models.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by anelson on 3/17/2016.
@@ -84,6 +87,26 @@ public class ZooService implements IZooService {
         animalFeedRecord.setDay(day);
         animal.addFeedingRecord(animalFeedRecord);
         return animalFeedRecord;
+    }
+
+    @Override
+    public List<DailyFeedingDTO> getAnimalFeedingHistory(Zoo zoo, int animalId) {
+        Optional<Animal> first = zoo.getAnimals().stream().filter(a -> a.getId() == animalId).findFirst();
+
+        List<DailyFeedingDTO> feedings = null;
+
+        if(first.isPresent()){
+            Animal animal = first.get();
+            //this should do a group by and get all feeds for a day and turn them all into a DailyFeedingDTO, but we're out of time
+            feedings = animal.getFeedingRecords().stream().map(fr -> {
+                DailyFeedingDTO dailyFeeding = new DailyFeedingDTO();
+                dailyFeeding.addFeeding(fr.getFeed().getName(), fr.getAmount());
+
+                return dailyFeeding;
+            }).collect(Collectors.toList());
+        }
+
+        return feedings;
     }
 
 }
