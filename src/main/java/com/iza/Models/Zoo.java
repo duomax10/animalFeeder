@@ -2,12 +2,20 @@ package com.iza.Models;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by anelson on 3/17/2016.
  */
 public class Zoo {
     private int id;
     private String name;
+    private List<Animal> animals;
+
+    public Zoo(){
+        animals = new ArrayList<>();
+    }
 
     public int getId() {
         return id;
@@ -25,18 +33,11 @@ public class Zoo {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object obj){
-        if (obj == null) { return false; }
-        if (obj == this) { return true; }
-        if (obj.getClass() != getClass()) {
-            return false;
-        }
-        Zoo rhs = (Zoo) obj;
+    public List<Animal> getAnimals() {
+        return animals;
+    }
 
-        return new EqualsBuilder()
-                .appendSuper(super.equals(rhs))
-                .append(name, rhs.name)
-                .isEquals();
+    public void addAnimal(Animal animal) {
+        animals.add(animal);
     }
 }
